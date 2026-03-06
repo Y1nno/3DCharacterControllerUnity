@@ -2,16 +2,17 @@ using UnityEngine;
 
 public class WalkingState : PlayerState
 {
-    public override void PhysicsUpdate()
+
+    public override void FrameUpdate()
     {
-        base.PhysicsUpdate();
         var inputDir = _playerController.InputDir;
         if (inputDir == Vector2.zero)
         {
+            Debug.Log("Input is zero, switching to Idle State");
             _stateMachine.ChangeState(PlayerStateInstance.Idle);
             return;
         }
-        _rigidbody.AddForce(new Vector3(inputDir.x, 0, inputDir.y) * HorizontalMoveForce, ForceMode.VelocityChange);
+        base.FrameUpdate();
     }
 
 }

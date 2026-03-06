@@ -61,5 +61,13 @@ public class CameraManager : MonoBehaviour
         );
 
         cameraPivot.rotation = Quaternion.Euler(pivotAngle, lookAngle, 0);
+        RotateTarget();
     }
+
+    private void RotateTarget()
+    {
+        Quaternion targetRotation = Quaternion.Euler(0, lookAngle, 0);
+        _target.GetComponent<PlayerController>().SetTargetRotation(targetRotation);
+    }
+
 }

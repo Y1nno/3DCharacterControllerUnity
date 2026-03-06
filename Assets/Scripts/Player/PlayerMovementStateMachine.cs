@@ -7,28 +7,21 @@ public class PlayerMovementStateMachine : MonoBehaviour
 {
     private PlayerState _currentState;
     private PlayerStateInstance _currentStateInstance;
+    public PlayerStateInstance CurrentStateInstance => _currentStateInstance;
+
     private Dictionary<PlayerStateInstance, PlayerState> _stateDictionary = new Dictionary<PlayerStateInstance, PlayerState>();
     [SerializeField] private PlayerStateInstance StartingStateInstance;
-    private PlayerController _controller;
 
-    //Animation
-    private Animator _animator;
-    private int _horizontalInputAnimHash;
-    private int _verticalInputAnimHash;
+    private float _onGroundDetectionRayLength = 1.2f;
 
     public void Start()
     {
-        _controller = GetComponent<PlayerController>();
-        _animator = GetComponent<Animator>();
-        _horizontalInputAnimHash = Animator.StringToHash("Horizontal");
-        _verticalInputAnimHash = Animator.StringToHash("Vertical");
         Initialize(StartingStateInstance);
     }
 
     public void Update()
     {
         _currentState?.FrameUpdate();
-        UpdateAnimatorValues();
     }
 
     public void FixedUpdate()
@@ -54,6 +47,7 @@ public class PlayerMovementStateMachine : MonoBehaviour
         if (_stateDictionary.TryGetValue(initialStateInstance, out PlayerState initialState))
         {
             _currentState = initialState;
+            _currentStateInstance = initialStateInstance;
             _currentState?.Enter();
         }
         else
@@ -79,32 +73,36 @@ public class PlayerMovementStateMachine : MonoBehaviour
         }
     }
 
-    #region Animation
-    public void UpdateAnimatorValues()
+    public bool IsOnGround()
     {
-        float snappedHorizontal = SnapByClosestPoint(_controller.InputDir.x, new List<float> {-1f, -0.55f, 0f, 0.55f, 1f});
-        float snappedVertical = SnapByClosestPoint(_controller.InputDir.y, new List<float> {-1f, -0.55f, 0f, 0.55f, 1f});
-        _animator.SetFloat(_horizontalInputAnimHash, snappedHorizontal, 0.1f, Time.deltaTime);
-        _animator.SetFloat(_verticalInputAnimHash, snappedVertical, 0.1f, Time.deltaTime);
+        Ray ray = new Ray(transform.position, Vector3.down);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, _onGroundDetectionRayLength))
+        {
+            return Vector3.Angle(hit.normal, Vector3.up) < 45f;
+        }
+        return false;
     }
 
-    public static float SnapByClosestPoint(float x, List<float> points)
+    #region Gizmos
+    private void OnDrawGizmos()
     {
-        float closestPoint = points[0];
-        points.Sort();
-        float closestDistance = MathF.Abs(x - closestPoint);
+        Vector3 origin = transform.position;
+        Vector3 direction = Vector3.down * _onGroundDetectionRayLength;
 
-        for (int i = 1; i < points.Count; i++)
+        Ray ray = new Ray(origin, Vector3.down);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, _onGroundDetectionRayLength))
         {
-            float distance = MathF.Abs(x - points[i]);
-            if (distance > closestDistance)
-                break;
-
-            closestDistance = distance;
-            closestPoint = points[i];
+            Gizmos.color = Vector3.Angle(hit.normal, Vector3.up) < 45f ? Color.green : Color.red;
+        }
+        else
+        {
+            Gizmos.color = Color.yellow;
         }
 
-        return closestPoint;
+        Gizmos.DrawLine(origin, origin + direction);
     }
     #endregion
 }

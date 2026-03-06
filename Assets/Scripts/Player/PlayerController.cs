@@ -11,17 +11,12 @@ public class PlayerController : MonoBehaviour
     private Vector2 _lookDir;
     public Vector2 LookDir => _lookDir;
 
-    [Header("Player Movement Settings")]
-    [SerializeField] private float _jumpForce = 5f;
+    [SerializeField] private float minStickDeadzone = 0.1f;
 
-    private Rigidbody _rigidbody;
-
-    private float _onGroundDetectionRayLength = 1.2f;
-    private bool _isJumping;
+    private Quaternion _targetRotation;
 
     private void Start()
     {
-        _rigidbody = GetComponent<Rigidbody>();
         _input.MovementAxisEvent += HandleMove;
         _input.JumpActionEvent += HandleJump;
         _input.JumpCancelledEvent += HandleJumpCancelled;
@@ -29,9 +24,9 @@ public class PlayerController : MonoBehaviour
         _input.LookAxisEvent += HandleLook;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        Jump();
+        RotateTowardsTarget();
     }
 
     #region Input Handling
@@ -40,75 +35,36 @@ public class PlayerController : MonoBehaviour
         throw new NotImplementedException();
     }
 
-    private void HandleJumpCancelled()
-    {
-        _isJumping = false;
-    }
+    private void HandleJumpCancelled(){}
 
-    private void HandleJump()
-    {
-        _isJumping = true;
-    }
+    private void HandleJump(){}
 
     private void HandleMove(Vector2 dir)
     {
+        if (dir.magnitude < minStickDeadzone)
+            dir = Vector2.zero;
         _inputDir = dir;
     }
 
     private void HandleLook(Vector2 dir)
     {
+        if (dir.magnitude < minStickDeadzone)
+            dir = Vector2.zero;
         _lookDir = dir;
     }
 
     #endregion
 
-    #region Movement
-
-    private void Jump()
+    public void SetTargetRotation(Quaternion targetRotation)
     {
-        if (_isJumping)
-        {
-            if (IsOnGround())
-            {
-                _rigidbody.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
-            }
-        }
+        _targetRotation = targetRotation;
     }
-    #endregion
 
-    #region Conditionals
-
-    private bool IsOnGround()
+    public void RotateTowardsTarget()
     {
-        Ray ray = new Ray(transform.position, Vector3.down);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, _onGroundDetectionRayLength))
-        {
-            return Vector3.Angle(hit.normal, Vector3.up) < 45f;
-        }
-        return false;
+        gameObject.transform.rotation = Quaternion.Slerp(
+            gameObject.transform.rotation,
+            _targetRotation,
+            Time.deltaTime * 10f);
     }
-    #endregion
-
-    #region Gizmos
-    private void OnDrawGizmos()
-    {
-        Vector3 origin = transform.position;
-        Vector3 direction = Vector3.down * _onGroundDetectionRayLength;
-
-        Ray ray = new Ray(origin, Vector3.down);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, _onGroundDetectionRayLength))
-        {
-            Gizmos.color = Vector3.Angle(hit.normal, Vector3.up) < 45f ? Color.green : Color.red;
-        }
-        else
-        {
-            Gizmos.color = Color.yellow;
-        }
-
-        Gizmos.DrawLine(origin, origin + direction);
-    }
-    #endregion
 }
