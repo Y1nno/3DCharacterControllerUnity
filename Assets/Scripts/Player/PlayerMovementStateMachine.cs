@@ -12,7 +12,7 @@ public class PlayerMovementStateMachine : MonoBehaviour
     private Dictionary<PlayerStateInstance, PlayerState> _stateDictionary = new Dictionary<PlayerStateInstance, PlayerState>();
     [SerializeField] private PlayerStateInstance StartingStateInstance;
 
-    private float _onGroundDetectionRayLength = 1.2f;
+    public float OnGroundDetectionRayLength = 0.002f;
 
     public void Start()
     {
@@ -66,6 +66,7 @@ public class PlayerMovementStateMachine : MonoBehaviour
                 Debug.LogWarning("Attempted to change to a state that does not exist in StatePairs.");
                 return;
             }
+            Debug.Log($"Changing state from {_currentStateInstance} to {newStateInstance}");
             _currentState?.Exit();
             _currentState = newState;
             _currentStateInstance = newStateInstance;
@@ -77,7 +78,7 @@ public class PlayerMovementStateMachine : MonoBehaviour
     {
         Ray ray = new Ray(transform.position, Vector3.down);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, _onGroundDetectionRayLength))
+        if (Physics.Raycast(ray, out hit, OnGroundDetectionRayLength))
         {
             return Vector3.Angle(hit.normal, Vector3.up) < 45f;
         }
@@ -88,12 +89,12 @@ public class PlayerMovementStateMachine : MonoBehaviour
     private void OnDrawGizmos()
     {
         Vector3 origin = transform.position;
-        Vector3 direction = Vector3.down * _onGroundDetectionRayLength;
+        Vector3 direction = Vector3.down * OnGroundDetectionRayLength;
 
         Ray ray = new Ray(origin, Vector3.down);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, _onGroundDetectionRayLength))
+        if (Physics.Raycast(ray, out hit, OnGroundDetectionRayLength))
         {
             Gizmos.color = Vector3.Angle(hit.normal, Vector3.up) < 45f ? Color.green : Color.red;
         }

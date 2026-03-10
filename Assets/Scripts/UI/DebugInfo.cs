@@ -20,5 +20,7 @@ public class DebugInfo : MonoBehaviour
     {
         text.text = "Debug Info";
         text.text += $"\nPlayer State: {_player.GetComponent<PlayerMovementStateMachine>().CurrentStateInstance}";
+        text.text += $"\nInput Dir: {_player.GetComponent<PlayerController>().InputDir}";
+        text.text += $"\n Is On Ground: {_player.GetComponent<PlayerMovementStateMachine>().IsOnGround()}";
     }
 }

@@ -8,6 +8,9 @@ public class PlayerController : MonoBehaviour
     private Vector2 _inputDir;
     public Vector2 InputDir => _inputDir;
 
+    private bool _IsJumping = false;
+    public bool IsJumping => _IsJumping;
+
     private Vector2 _lookDir;
     public Vector2 LookDir => _lookDir;
 
@@ -35,9 +38,15 @@ public class PlayerController : MonoBehaviour
         throw new NotImplementedException();
     }
 
-    private void HandleJumpCancelled(){}
+    private void HandleJumpCancelled()
+    {
+        _IsJumping = false;
+    }
 
-    private void HandleJump(){}
+    private void HandleJump()
+    {
+        _IsJumping = true;
+    }
 
     private void HandleMove(Vector2 dir)
     {

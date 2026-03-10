@@ -164,7 +164,7 @@ Transform:
   m_GameObject: {fileID: 239523215}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 5.7700024, z: 9.700001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -333,7 +333,7 @@ Transform:
   m_GameObject: {fileID: 357727701}
   serializedVersion: 2
   m_LocalRotation: {x: 0.17877626, y: -0, z: -0, w: 0.9838898}
-  m_LocalPosition: {x: 0, y: 3, z: -2}
+  m_LocalPosition: {x: 0, y: 5.14, z: -7.69}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -628,9 +628,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1217996043}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -270, y: -160}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 130, y: -74}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1176512256
@@ -732,7 +732,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -133.89717, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1177,13 +1177,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1479186256}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.42306626, y: -0, z: -0, w: 0.9060988}
-  m_LocalPosition: {x: -0.73632, y: 2.51, z: 11.51}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.73632, y: 5.55, z: 11.51}
   m_LocalScale: {x: 3.5539, y: 1, z: 3.9093}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -50.057, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1672316562
 GameObject:
   m_ObjectHideFlags: 0
@@ -1386,7 +1386,7 @@ Transform:
   m_GameObject: {fileID: 1108009685895250690}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: -0.592, y: 6.28, z: 11.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1535,6 +1535,7 @@ GameObject:
   - component: {fileID: 5966016648345748422}
   - component: {fileID: 5966016648345748421}
   - component: {fileID: 5966016648345748420}
+  - component: {fileID: 5966016648345748427}
   - component: {fileID: 5966016648345748426}
   - component: {fileID: 5966016648345748419}
   - component: {fileID: 5966016648345748424}
@@ -1999,7 +2000,7 @@ Transform:
   m_GameObject: {fileID: 7483472458903787525}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.373, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2918,7 +2919,7 @@ Animator:
   m_Avatar: {fileID: 9000000, guid: 4153f04a95cd26e44925f77b18d28707, type: 3}
   m_Controller: {fileID: 9100000, guid: 75cd71d5b34c0204bb8e66c8329e510a, type: 2}
   m_CullingMode: 1
-  m_UpdateMode: 0
+  m_UpdateMode: 1
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -2943,7 +2944,7 @@ MonoBehaviour:
   HorizontalDamp: 5
   HorizontalMoveForce: 5
   StateInstance: 1
-  _canJump: 0
+  _canJump: 1
   _canMove: 1
 --- !u!114 &5966016648345748420
 MonoBehaviour:
@@ -2975,6 +2976,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovementStateMachine
   StartingStateInstance: 1
+  OnGroundDetectionRayLength: 0.1
 --- !u!114 &5966016648345748422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2997,7 +2999,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1108009685895250690}
   serializedVersion: 5
-  m_Mass: 100
+  m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -3015,7 +3017,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!136 &5966016648345748424
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3064,10 +3066,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FallingState
   HorizontalDamp: 1
-  HorizontalMoveForce: 3
+  HorizontalMoveForce: 5
   StateInstance: 4
   _canJump: 0
   _canMove: 1
+  _maxFallSpeed: 100
+  _fallAcceleration: 9.8
+  _fallLoopAnimationName: Armature|Jump_Loop
+  _jumpStartAnimationName: Armature|Jump_Start
+--- !u!114 &5966016648345748427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1108009685895250690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a24501adfbcb6fc4f9375a8fb3b77f3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JumpingState
+  HorizontalDamp: 1
+  HorizontalMoveForce: 5
+  StateInstance: 3
+  _canJump: 0
+  _canMove: 1
+  JumpForce: 2000
+  JumpStartAnimationName: Armature|Jump_Start
+  JumpImpulseDelay: 0.1
 --- !u!4 &6076915878625415219
 Transform:
   m_ObjectHideFlags: 0
